@@ -1,0 +1,129 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Clients {
+  id            String         @id @default(cuid())
+  login         String         @unique @db.VarChar(16)
+  password_hash String // autogenerate only!
+  password_salt String // autogenerate only!
+  first_name    String?        @db.VarChar(16)
+  second_name   String?        @db.VarChar(16)
+  third_name    String?        @db.VarChar(16)
+  Transactions  Transactions[]
+}
+
+model Employers {
+  id            String         @id @default(cuid())
+  login         String         @unique @db.VarChar(16)
+  password_hash String // autogenerate only!
+  password_salt String // autogenerate only!
+  first_name    String         @db.VarChar(16)
+  second_name   String         @db.VarChar(16)
+  third_name    String         @db.VarChar(16)
+  job           Jobs
+  tel           String         @db.VarChar(11) // "8" + 10-digits of phone number
+  Transactions  Transactions[]
+}
+
+model Suppliers {
+  id       String     @id @default(cuid())
+  title    String     @db.VarChar(64)
+  email    String     @db.VarChar(320)
+  Products Products[]
+}
+
+model Storages {
+  id                String              @id @default(cuid())
+  title             String              @db.VarChar(64)
+  address           String              @db.VarChar(256)
+  Products_Storages Products_Storages[]
+}
+
+model Products {
+  id            String        @id @default(cuid())
+  title         String        @db.VarChar(64)
+  description   String        @db.VarChar(4096)
+  release_date  DateTime
+  type          Product_types @default(Unknown)
+  supplierId    String
+  supplier      Suppliers     @relation(fields: [supplierId], references: [id])
+  sales_stopped Boolean       @default(false)
+  price         Float
+
+  Products_Storages     Products_Storages[]
+  Transactions_Products Transactions_Products[]
+  Products_Requirements Products_Requirements[]
+}
+
+model Products_Storages {
+  productId String
+  storageId String
+  product   Products @relation(fields: [productId], references: [id])
+  storage   Storages @relation(fields: [storageId], references: [id])
+  count     Int
+
+  @@id([productId, storageId])
+}
+
+model Transactions {
+  id                    String                  @id @default(cuid())
+  clientId              String
+  client                Clients                 @relation(fields: [clientId], references: [id])
+  employerId            String
+  employer              Employers               @relation(fields: [employerId], references: [id])
+  date                  DateTime                @default(now())
+  Transactions_Products Transactions_Products[]
+}
+
+model Transactions_Products {
+  transactionId String
+  transaction   Transactions @relation(fields: [transactionId], references: [id])
+  productId     String
+  product       Products     @relation(fields: [productId], references: [id])
+
+  @@id([transactionId, productId])
+}
+
+model Products_Requirements {
+  productId     String
+  product       Products     @relation(fields: [productId], references: [id])
+  requirementId String
+  requirement   Requirements @relation(fields: [requirementId], references: [id])
+  count         Int
+  price         Float
+
+  @@id([productId, requirementId])
+}
+
+model Requirements {
+  id                    String                  @id @default(cuid())
+  title                 String                  @db.VarChar(16)
+  unit                  String                  @db.VarChar(8)
+  Products_Requirements Products_Requirements[]
+}
+
+enum Product_types {
+  PC_Game
+  PS4_Game
+  PS5_Game
+  XBoxS_Game
+  Headphones
+  Keyboard
+  Unknown
+}
+
+enum Jobs {
+  Administrator
+  Cashier
+  Storage_worker
+  Cleaner
+}
