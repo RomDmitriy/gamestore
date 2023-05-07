@@ -1,9 +1,4 @@
-export enum UserTypes {
-  Administrator,
-  Cashier,
-  Storage_worker,
-  Cleaner,
-}
+import { UserTypes } from '@prisma/client';
 
 export default interface signInDto {
   login: string;

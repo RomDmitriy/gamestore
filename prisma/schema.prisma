@@ -11,13 +11,14 @@ datasource db {
 }
 
 model Users {
-  id            String @id @default(cuid())
-  login         String @unique @db.VarChar(16)
-  password_hash String @db.VarChar(60) // autogenerate only!
-  password_salt String @db.VarChar(29) // autogenerate only!
-  first_name   String         @db.VarChar(16)
-  second_name  String         @db.VarChar(16)
-  third_name   String         @db.VarChar(16)
+  id            String    @id @default(cuid())
+  login         String    @unique @db.VarChar(16)
+  password_hash String    @db.VarChar(60) // autogenerate only!
+  password_salt String    @db.VarChar(29) // autogenerate only!
+  first_name    String    @db.VarChar(16)
+  second_name   String    @db.VarChar(16)
+  third_name    String    @db.VarChar(16)
+  user_type     UserTypes @default(Client)
 }
 
 model Clients {
@@ -128,4 +129,10 @@ enum Jobs {
   Cashier
   Storage_worker
   Cleaner
+}
+
+enum UserTypes {
+  Client
+  Employer
+  Admin
 }
