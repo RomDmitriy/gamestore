@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import jwtInfo from 'src/dto/jwtInfo.dto';
+import Tokens from 'src/dto/tokens.dto';
 
 const enum TOKEN_TYPES {
   'access' = 'access',
@@ -15,6 +16,28 @@ export class JwtGeneratorService {
     private readonly configService: ConfigService,
   ) {}
 
+  generateTokens(userInfo: jwtInfo): Tokens {
+    return {
+      access_token: this.jwt.sign(
+        { userInfo, type: TOKEN_TYPES.access },
+        {
+          privateKey: this.configService.getOrThrow('JWT_ACCESS_KEY'),
+          expiresIn: 900,
+        },
+      ),
+      refresh_token: this.jwt.sign(
+        { userInfo, type: TOKEN_TYPES.refresh },
+        {
+          privateKey: this.configService.getOrThrow('JWT_REFRESH_KEY'),
+          expiresIn: '30d',
+        },
+      ),
+    };
+  }
+
+  /**
+   * @deprecated
+   */
   generateAccessToken(userInfo: jwtInfo): string {
     return this.jwt.sign(
       { userInfo, type: TOKEN_TYPES.access },
@@ -25,6 +48,9 @@ export class JwtGeneratorService {
     );
   }
 
+  /**
+   * @deprecated
+   */
   generateRefreshToken(userInfo: jwtInfo): string {
     return this.jwt.sign(
       { userInfo, type: TOKEN_TYPES.refresh },
