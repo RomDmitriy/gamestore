@@ -10,28 +10,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Users {
+  id            String @id @default(cuid())
+  login         String @unique @db.VarChar(16)
+  password_hash String @db.VarChar(60) // autogenerate only!
+  password_salt String @db.VarChar(29) // autogenerate only!
+  first_name   String         @db.VarChar(16)
+  second_name  String         @db.VarChar(16)
+  third_name   String         @db.VarChar(16)
+}
+
 model Clients {
-  id            String         @id @default(cuid())
-  login         String         @unique @db.VarChar(16)
-  password_hash String         @db.VarChar(60) // autogenerate only!
-  password_salt String         @db.VarChar(29) // autogenerate only!
-  first_name    String?        @db.VarChar(16)
-  second_name   String?        @db.VarChar(16)
-  third_name    String?        @db.VarChar(16)
-  Transactions  Transactions[]
+  id           String         @id
+  Transactions Transactions[]
 }
 
 model Employers {
-  id            String         @id @default(cuid())
-  login         String         @unique @db.VarChar(16)
-  password_hash String         @db.VarChar(60) // autogenerate only!
-  password_salt String         @db.VarChar(29) // autogenerate only!
-  first_name    String         @db.VarChar(16)
-  second_name   String         @db.VarChar(16)
-  third_name    String         @db.VarChar(16)
-  job           Jobs
-  tel           String         @db.VarChar(11) // "8" + 10-digits of phone number
-  Transactions  Transactions[]
+  id           String         @id
+  job          Jobs
+  tel          String         @db.VarChar(11) // "8" + 10-digits of phone number
+  Transactions Transactions[]
+}
+
+model Admins {
+  id String @id
 }
 
 model Suppliers {
