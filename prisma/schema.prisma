@@ -18,7 +18,7 @@ model Users {
   first_name    String    @db.VarChar(16)
   second_name   String    @db.VarChar(16)
   third_name    String    @db.VarChar(16)
-  user_type     UserTypes @default(Client)
+  user_type     UserTypes
 }
 
 model Clients {
