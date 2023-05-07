@@ -1,4 +1,4 @@
-import signInDto from './signIn.dto';
+import signUpDto from './signUp.dto';
 
 // По необходимости расширить
-export type signUpClientDto = signInDto;
+export type signUpClientDto = signUpDto;
