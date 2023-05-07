@@ -1,12 +1,8 @@
 import { UserTypes } from '@prisma/client';
 import signUpDto from './signUp.dto';
-import userTypeDto from './userType.dto';
 import { IsMobilePhone } from 'class-validator';
 
-export default class signUpEmployerDto
-  extends signUpDto
-  implements userTypeDto
-{
+export default class signUpEmployerDto extends signUpDto {
   userType: UserTypes = 'Employer';
 
   @IsMobilePhone('ru-RU')
