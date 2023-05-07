@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import jwtInfo from 'src/dto/JWT_info.dto';
+import jwtInfo from 'src/dto/jwtInfo.dto';
 
 const enum TOKEN_TYPES {
   'access' = 'access',
