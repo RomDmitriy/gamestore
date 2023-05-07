@@ -1,4 +1,4 @@
 // по желанию можно добавить больше информации в токен
-export interface jwtInfo {
+export default interface jwtInfo {
   id: string;
 }

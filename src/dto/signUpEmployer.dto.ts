@@ -1,5 +1,5 @@
-import { signUpDto } from './signUp.dto';
+import signUpDto from './signUp.dto';
 
-export interface signUpEmployerDto extends signUpDto {
+export default interface signUpEmployerDto extends signUpDto {
   tel: string;
 }

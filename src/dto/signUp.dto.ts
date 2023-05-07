@@ -1,5 +1,5 @@
 // стандартный интерфейс для авторизации, использовать только для наследования
-export interface signUpDto {
+export default interface signUpDto {
   login: string;
   password: string;
   first_name: string;
