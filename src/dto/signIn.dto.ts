@@ -1,12 +1,12 @@
-enum Types {
+export enum UserTypes {
   Administrator,
   Cashier,
   Storage_worker,
   Cleaner,
 }
 
-export default interface signInDto {
+export interface signInDto {
   login: string;
   password: string;
-  userType: Types;
+  userType: UserTypes;
 }
