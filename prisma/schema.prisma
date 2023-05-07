@@ -23,6 +23,7 @@ model Users {
 
 model Clients {
   id           String         @id
+  avatar_url   String         @db.VarChar(1024) @default("https://i.imgur.com/UoyR0Wc_d.webp")
   Transactions Transactions[]
 }
 

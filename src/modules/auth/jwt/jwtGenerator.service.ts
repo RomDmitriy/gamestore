@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import jwtInfo from 'src/dto/jwtInfo.dto';
-import Tokens from 'src/dto/tokens.dto';
+import TokensDto from 'src/dto/tokens.dto';
 
 const enum TOKEN_TYPES {
   'access' = 'access',
@@ -16,7 +16,7 @@ export class JwtGeneratorService {
     private readonly configService: ConfigService,
   ) {}
 
-  generateTokens(userInfo: jwtInfo): Tokens {
+  generateTokens(userInfo: jwtInfo): TokensDto {
     return {
       access_token: this.jwt.sign(
         { userInfo, type: TOKEN_TYPES.access },
