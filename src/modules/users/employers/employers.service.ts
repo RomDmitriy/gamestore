@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import signUpEmployerDto from 'src/dto/signUpEmployer.dto';
+import signUpEmployerDto from 'src/modules/auth/dto/sign-up-employer.dto';
 
 @Injectable()
 export class EmployersService {

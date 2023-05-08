@@ -1,11 +1,11 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
-import SignInDto from 'src/dto/signIn.dto';
 import { AuthenticationService } from './authentication.service';
-import signUpClientDto from 'src/dto/signUpClient.dto';
-import signUpEmployerDto from 'src/dto/signUpEmployer.dto';
-import TokensDto from 'src/dto/tokens.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import TokensEntity from 'src/entities/tokens.entity';
+import TokensDto from '../dto/tokens.dto';
+import SignInDto from '../dto/sign-in.dto';
+import signUpClientDto from '../dto/sign-up-client.dto';
+import signUpEmployerDto from '../dto/sign-up-employer.dto';
 
 @Controller('authentication')
 export class AuthenticationController {

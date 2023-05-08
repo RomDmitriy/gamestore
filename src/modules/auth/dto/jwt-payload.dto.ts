@@ -1,4 +1,4 @@
-import jwtInfo from './jwtInfo.dto';
+import jwtInfo from './jwt-info.dto';
 
 export enum TokenTypes {
   'ACCESS',

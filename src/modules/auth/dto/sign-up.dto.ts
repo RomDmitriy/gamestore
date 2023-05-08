@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Length } from 'class-validator';
-import SignInDto from './signIn.dto';
+import SignInDto from './sign-in.dto';
 
 // стандартный интерфейс для авторизации, использовать только для наследования
 export default class signUpDto extends SignInDto {

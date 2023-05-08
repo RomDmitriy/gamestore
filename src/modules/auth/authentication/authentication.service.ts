@@ -3,14 +3,14 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import SignInDto from 'src/dto/signIn.dto';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma.service';
 import { JwtGeneratorService } from '../jwt/jwtGenerator.service';
-import signUpClientDto from 'src/dto/signUpClient.dto';
-import signUpEmployerDto from 'src/dto/signUpEmployer.dto';
-import TokensDto from 'src/dto/tokens.dto';
 import { User_types } from '@prisma/client';
+import SignInDto from '../dto/sign-in.dto';
+import TokensDto from '../dto/tokens.dto';
+import signUpEmployerDto from '../dto/sign-up-employer.dto';
+import signUpClientDto from '../dto/sign-up-client.dto';
 
 @Injectable()
 export class AuthenticationService {
