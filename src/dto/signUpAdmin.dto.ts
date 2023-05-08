@@ -1,6 +1,6 @@
-import { UserTypes } from '@prisma/client';
+import { User_types } from '@prisma/client';
 import signUpDto from './signUp.dto';
 
 export default class signUpAdminDto extends signUpDto {
-  userType: UserTypes = 'Admin';
+  userType: User_types = 'Admin';
 }

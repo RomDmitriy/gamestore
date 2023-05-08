@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { UserTypes } from '@prisma/client';
+import { User_types } from '@prisma/client';
 import { Length } from 'class-validator';
 
 export default class SignInDto {
@@ -19,5 +19,5 @@ export default class SignInDto {
   @Length(6, 32)
   password: string;
 
-  userType: UserTypes;
+  userType: User_types;
 }

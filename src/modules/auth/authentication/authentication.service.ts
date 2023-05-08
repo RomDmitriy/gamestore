@@ -10,7 +10,7 @@ import { JwtGeneratorService } from '../jwt/jwtGenerator.service';
 import signUpClientDto from 'src/dto/signUpClient.dto';
 import signUpEmployerDto from 'src/dto/signUpEmployer.dto';
 import TokensDto from 'src/dto/tokens.dto';
-import { UserTypes } from '@prisma/client';
+import { User_types } from '@prisma/client';
 
 @Injectable()
 export class AuthenticationService {
@@ -66,7 +66,7 @@ export class AuthenticationService {
           first_name: signUpClientInfo.first_name,
           second_name: signUpClientInfo.second_name,
           third_name: signUpClientInfo.third_name,
-          user_type: UserTypes.Client,
+          user_type: User_types.Client,
         },
         select: {
           id: true,

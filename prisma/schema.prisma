@@ -18,7 +18,7 @@ model Users {
   first_name    String    @db.VarChar(16)
   second_name   String    @db.VarChar(16)
   third_name    String    @db.VarChar(16)
-  user_type     UserTypes
+  user_type     User_types
 }
 
 model Clients {
@@ -132,7 +132,7 @@ enum Jobs {
   Cleaner
 }
 
-enum UserTypes {
+enum User_types {
   Client
   Employer
   Admin
