@@ -1,8 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma.service';
 import { JwtGeneratorService } from '../jwt/jwtGenerator.service';
@@ -14,10 +10,7 @@ import signUpClientDto from '../dto/sign-up-client.dto';
 
 @Injectable()
 export class AuthenticationService {
-  constructor(
-    private prismaService: PrismaService,
-    private jwtGeneratorService: JwtGeneratorService,
-  ) {}
+  constructor(private prismaService: PrismaService, private jwtGeneratorService: JwtGeneratorService) {}
 
   async signIn(signInInfo: SignInDto): Promise<TokensDto> {
     const user = await this.prismaService.users.findFirst({
@@ -36,10 +29,7 @@ export class AuthenticationService {
       throw new NotFoundException();
     }
 
-    const crypted_password = await bcrypt.hash(
-      signInInfo.password,
-      user.password_salt,
-    );
+    const crypted_password = await bcrypt.hash(signInInfo.password, user.password_salt);
 
     if (user.password_hash !== crypted_password) {
       throw new NotFoundException();
@@ -52,10 +42,7 @@ export class AuthenticationService {
 
   async signUpClient(signUpClientInfo: signUpClientDto): Promise<TokensDto> {
     const password_salt = await bcrypt.genSalt();
-    const password_hash = await bcrypt.hash(
-      signUpClientInfo.password,
-      password_salt,
-    );
+    const password_hash = await bcrypt.hash(signUpClientInfo.password, password_salt);
 
     const user = await this.prismaService.users
       .create({
@@ -84,14 +71,9 @@ export class AuthenticationService {
     return this.jwtGeneratorService.generateTokens(user);
   }
 
-  async signUpEmployer(
-    signUpEmployerInfo: signUpEmployerDto,
-  ): Promise<TokensDto> {
+  async signUpEmployer(signUpEmployerInfo: signUpEmployerDto): Promise<TokensDto> {
     const password_salt = await bcrypt.genSalt();
-    const password_hash = await bcrypt.hash(
-      signUpEmployerInfo.password,
-      password_salt,
-    );
+    const password_hash = await bcrypt.hash(signUpEmployerInfo.password, password_salt);
 
     const user = await this.prismaService.users
       .create({

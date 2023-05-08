@@ -5,11 +5,7 @@ import { RequirementsController } from './requirements/requirements.controller';
 import { ProductTypesController } from './product_types/product_types.controller';
 
 @Module({
-  controllers: [
-    ProductsController,
-    RequirementsController,
-    ProductTypesController,
-  ],
+  controllers: [ProductsController, RequirementsController, ProductTypesController],
   providers: [ProductsService],
 })
 export class ProductsModule {}

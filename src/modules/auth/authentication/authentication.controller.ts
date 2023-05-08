@@ -1,11 +1,6 @@
 import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import TokensEntity from 'src/entities/tokens.entity';
 import TokensDto from '../dto/tokens.dto';
 import SignInDto from '../dto/sign-in.dto';
@@ -53,9 +48,7 @@ export class AuthenticationController {
     type: TokensEntity,
   })
   @Post('register/employer')
-  signUpEmployer(
-    @Body() signUpEmployerInfo: signUpEmployerDto,
-  ): Promise<TokensDto> {
+  signUpEmployer(@Body() signUpEmployerInfo: signUpEmployerDto): Promise<TokensDto> {
     return this.authenticationService.signUpEmployer(signUpEmployerInfo);
   }
 }

@@ -7,10 +7,7 @@ import { TokenTypes } from '../dto/jwt-payload.dto';
 
 @Injectable()
 export class JwtGeneratorService {
-  constructor(
-    private readonly jwt: JwtService,
-    private readonly configService: ConfigService,
-  ) {}
+  constructor(private readonly jwt: JwtService, private readonly configService: ConfigService) {}
 
   generateTokens(userInfo: jwtInfo): TokensDto {
     return {
