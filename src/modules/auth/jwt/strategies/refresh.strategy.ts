@@ -1,25 +1,25 @@
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Injectable } from '@nestjs/common';
+import jwtPayloadDto from 'src/dto/jwtPayload.dto';
+import jwtInfo from 'src/dto/jwtInfo.dto';
 
 @Injectable()
 export class RefreshStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
-  constructor(private readonly configService: ConfigService) {
+  constructor(readonly configService: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
       secretOrKey: configService.get('JWT_REFRESH_KEY'),
-      passReqToCallback: true,
     });
   }
 
-  validate(req: Request, payload: any) {
-    const refresh_token = req.get('Authorization').split(' ')[1];
-    return {
-      ...payload.userInfo,
-      refresh_token,
-    };
+  validate(payload: jwtPayloadDto): jwtInfo {
+    // так-то здесь нужна проверка на то, что токен нужного типа, но
+    // у нас стоят разные ключи для ACCESS и REFRESH токенов, из-за чего
+    // токен при валидации не пройдёт, поэтому смысла в дополнительной проверки нет.
+    //if (payload.type !== TokenTypes.REFRESH) throw new UnauthorizedException();
+    return payload.userInfo;
   }
 }
