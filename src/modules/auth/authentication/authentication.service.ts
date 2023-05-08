@@ -67,6 +67,11 @@ export class AuthenticationService {
           second_name: signUpClientInfo.second_name,
           third_name: signUpClientInfo.third_name,
           user_type: User_types.Client,
+          Clients: {
+            create: {
+              avatar_url: signUpClientInfo.avatar_url,
+            },
+          },
         },
         select: {
           id: true,
@@ -76,18 +81,43 @@ export class AuthenticationService {
         throw new ConflictException();
       });
 
-    await this.prismaService.clients.create({
-      data: {
-        id: user.id,
-        avatar_url: signUpClientInfo.avatar_url,
-      },
-    });
-
     return this.jwtGeneratorService.generateTokens(user);
   }
 
-  async signUpEmployer(signUpEmployerInfo: signUpEmployerDto): Promise<void> {
-    //TODO: доделать
-    return null;
+  async signUpEmployer(
+    signUpEmployerInfo: signUpEmployerDto,
+  ): Promise<TokensDto> {
+    const password_salt = await bcrypt.genSalt();
+    const password_hash = await bcrypt.hash(
+      signUpEmployerInfo.password,
+      password_salt,
+    );
+
+    const user = await this.prismaService.users
+      .create({
+        data: {
+          login: signUpEmployerInfo.login,
+          password_hash: password_hash,
+          password_salt: password_salt,
+          first_name: signUpEmployerInfo.first_name,
+          second_name: signUpEmployerInfo.second_name,
+          third_name: signUpEmployerInfo.third_name,
+          user_type: User_types.Client,
+          Employers: {
+            create: {
+              tel: signUpEmployerInfo.tel,
+              job: signUpEmployerInfo.job,
+            },
+          },
+        },
+        select: {
+          id: true,
+        },
+      })
+      .catch(() => {
+        throw new ConflictException();
+      });
+
+    return this.jwtGeneratorService.generateTokens(user);
   }
 }
