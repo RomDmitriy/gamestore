@@ -8,11 +8,11 @@ import signUpClientDto from '../dto/sign-up-client.dto';
 import signUpEmployerDto from '../dto/sign-up-employer.dto';
 import { AuthGuard } from '@nestjs/passport';
 
-@Controller('authentication')
+@ApiTags('Auth')
+@Controller('auth')
 export class AuthenticationController {
   constructor(private authenticationService: AuthenticationService) {}
 
-  @ApiTags('auth')
   @ApiOperation({ summary: 'Войти в аккаунт' })
   @HttpCode(200)
   @ApiResponse({
@@ -25,7 +25,6 @@ export class AuthenticationController {
     return this.authenticationService.signIn(signInInfo);
   }
 
-  @ApiTags('auth')
   @ApiOperation({ summary: 'Зарегистрировать клиента' })
   @ApiResponse({
     status: 201,
@@ -38,7 +37,6 @@ export class AuthenticationController {
   }
 
   //TODO: добавить guard на админа
-  @ApiTags('auth')
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Зарегистрировать сотрудника' })
