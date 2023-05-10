@@ -116,7 +116,7 @@ model Products_Requirements {
 
 model Requirements {
   id                    String                  @id @default(cuid())
-  title                 String                  @db.VarChar(16)
+  title                 String                  @db.VarChar(32)
   unit                  String                  @db.VarChar(8)
   Products_Requirements Products_Requirements[]
 }
