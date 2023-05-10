@@ -8,14 +8,15 @@ import ProductDto from './dto/product.dto';
 export class ProductsService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  create(createProductDto: CreateProductDto) {
+  //TODO: доделать
+  async create(createProductDto: CreateProductDto) {
     // await this.prismaService.products.create({
     //   data: {
     //   }
     // });
   }
 
-  findAll(count: number, offset: number): Promise<ProductDto[]> {
+  async findAll(count: number, offset: number): Promise<ProductDto[]> {
     if (count === undefined || isNaN(count) || count === 0) count = null;
     if (offset === undefined || isNaN(offset)) count = null;
 
@@ -39,7 +40,7 @@ export class ProductsService {
     });
   }
 
-  findOne(id: string): Promise<ProductDto> {
+  async findOne(id: string): Promise<ProductDto> {
     if (id === undefined) throw new BadRequestException();
 
     return this.prismaService.products.findFirstOrThrow({
@@ -63,11 +64,12 @@ export class ProductsService {
     });
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
+  //TODO: доделать
+  async update(id: number, updateProductDto: UpdateProductDto) {
     return `This action updates a #${id} product`;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return `This action removes a #${id} product`;
   }
 }
