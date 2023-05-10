@@ -3,10 +3,10 @@ import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma.service';
 import { JwtGeneratorService } from '../jwt/jwtGenerator.service';
 import { User_types } from '@prisma/client';
-import SignInDto from '../dto/sign-in.dto';
-import TokensDto from '../dto/tokens.dto';
-import signUpEmployerDto from '../dto/sign-up-employer.dto';
-import signUpClientDto from '../dto/sign-up-client.dto';
+import SignInDto from './dto/sign-in.dto';
+import TokensDto from '../jwt/dto/tokens.dto';
+import signUpEmployerDto from './dto/sign-up-employer.dto';
+import signUpClientDto from './dto/sign-up-client.dto';
 
 @Injectable()
 export class AuthenticationService {

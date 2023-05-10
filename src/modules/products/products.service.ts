@@ -1,19 +1,66 @@
-import { Injectable } from '@nestjs/common';
-import { CreateProductDto } from './dto/create-product.dto';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import CreateProductDto from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { PrismaService } from 'src/prisma.service';
+import ProductDto from './dto/product.dto';
 
 @Injectable()
 export class ProductsService {
+  constructor(private readonly prismaService: PrismaService) {}
+
   create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+    // await this.prismaService.products.create({
+    //   data: {
+    //   }
+    // });
   }
 
-  findAll() {
-    return `This action returns all products`;
+  findAll(count: number, offset: number): Promise<ProductDto[]> {
+    if (count === undefined || isNaN(count) || count === 0) count = null;
+    if (offset === undefined || isNaN(offset)) count = null;
+
+    return this.prismaService.products.findMany({
+      take: count,
+      skip: offset,
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        release_date: true,
+        type: true,
+        supplier: {
+          select: {
+            title: true,
+          },
+        },
+        sales_stopped: true,
+        price: true,
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  findOne(id: string): Promise<ProductDto> {
+    if (id === undefined) throw new BadRequestException();
+
+    return this.prismaService.products.findFirstOrThrow({
+      where: {
+        id: id,
+      },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        release_date: true,
+        type: true,
+        supplier: {
+          select: {
+            title: true,
+          },
+        },
+        sales_stopped: true,
+        price: true,
+      },
+    });
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {
